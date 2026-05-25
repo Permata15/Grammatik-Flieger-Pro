@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -69,6 +69,10 @@
                     <p class="font-bold text-gray-200 text-sm md:text-base">Instruksi Tempur Baru:</p>
                     <div class="flex items-start gap-2">
                         <span class="text-emerald-400 font-bold">✓</span>
+                        <span><strong>Kemudi 4-Arah:</strong> Pesawat sekarang bisa bebas bergerak ke **Atas, Bawah, Kiri, Kanan**!</span>
+                    </div>
+                    <div class="flex items-start gap-2">
+                        <span class="text-emerald-400 font-bold">✓</span>
                         <span><strong>Skor & Waktu:</strong> Menjawab benar memberi **+100 poin** & **+6 detik** tambahan waktu.</span>
                     </div>
                     <div class="flex items-start gap-2">
@@ -78,10 +82,6 @@
                     <div class="flex items-start gap-2">
                         <span class="text-yellow-400 font-bold">⚠</span>
                         <span><strong>Nyawa Terbatas:</strong> Anda hanya dibekali **5 Nyawa**. Hati-hati dengan tabrakan Asteroid!</span>
-                    </div>
-                    <div class="flex items-start gap-2">
-                        <span class="text-cyan-400 font-bold">★</span>
-                        <span>Kumpulkan 3 jawaban benar beruntun untuk mengaktifkan **Double Shot**!</span>
                     </div>
                 </div>
 
@@ -200,14 +200,27 @@
 
         <!-- Kendali Touchscreen Untuk HP (Tampil jika di mobile/tablet) -->
         <div id="mobile-controls" class="absolute bottom-6 left-0 w-full px-6 flex justify-between items-center z-10 select-none md:hidden">
-            <!-- Kiri/Kanan Kemudi -->
-            <div class="flex gap-4">
-                <button id="btn-left" class="w-16 h-16 bg-slate-900/90 active:bg-purple-600/90 border-2 border-purple-500/40 rounded-2xl flex items-center justify-center shadow-lg active:scale-90 transition-all">
-                    <i data-lucide="chevron-left" class="w-8 h-8 text-white"></i>
+            <!-- Grid Kemudi 4-Arah -->
+            <div class="grid grid-cols-3 gap-2 w-36 h-36">
+                <div></div>
+                <button id="btn-up" class="w-11 h-11 bg-slate-900/90 active:bg-purple-600/90 border border-purple-500/40 rounded-xl flex items-center justify-center shadow-lg active:scale-90 transition-all">
+                    <i data-lucide="chevron-up" class="w-5 h-5 text-white"></i>
                 </button>
-                <button id="btn-right" class="w-16 h-16 bg-slate-900/90 active:bg-purple-600/90 border-2 border-purple-500/40 rounded-2xl flex items-center justify-center shadow-lg active:scale-90 transition-all">
-                    <i data-lucide="chevron-right" class="w-8 h-8 text-white"></i>
+                <div></div>
+                <button id="btn-left" class="w-11 h-11 bg-slate-900/90 active:bg-purple-600/90 border border-purple-500/40 rounded-xl flex items-center justify-center shadow-lg active:scale-90 transition-all">
+                    <i data-lucide="chevron-left" class="w-5 h-5 text-white"></i>
                 </button>
+                <div class="w-11 h-11 flex items-center justify-center">
+                    <div class="w-3 h-3 bg-purple-500/30 rounded-full"></div>
+                </div>
+                <button id="btn-right" class="w-11 h-11 bg-slate-900/90 active:bg-purple-600/90 border border-purple-500/40 rounded-xl flex items-center justify-center shadow-lg active:scale-90 transition-all">
+                    <i data-lucide="chevron-right" class="w-5 h-5 text-white"></i>
+                </button>
+                <div></div>
+                <button id="btn-down" class="w-11 h-11 bg-slate-900/90 active:bg-purple-600/90 border border-purple-500/40 rounded-xl flex items-center justify-center shadow-lg active:scale-90 transition-all">
+                    <i data-lucide="chevron-down" class="w-5 h-5 text-white"></i>
+                </button>
+                <div></div>
             </div>
             
             <!-- Tombol Tembak Meriam -->
@@ -242,7 +255,7 @@
             { category: "KONJUGATION", question: "Er ___ einen Apfel. (essen)", translation: "Dia makan sebuah apel.", correct: "isst", wrong: ["essen", "esst", "esse"] },
             { category: "KONJUGATION", question: "Wir ___ Musik. (hören)", translation: "Kami mendengarkan musik.", correct: "hören", wrong: ["hörst", "hört", "höre"] },
             { category: "KONJUGATION", question: "___ ihr Spanisch? (lernen)", translation: "Apakah kalian belajar bahasa Spanyol?", correct: "Lernt", wrong: ["Lernen", "Lernst", "Lerne"] },
-            { category: "KONJUGATION", question: "Wann ___ der Zug ab? (abfahren)", translation: "Kapan kereta berangkat?", correct: "fährt", wrong: ["fahren", "fährst", "fahrt"] },
+            { category: "KONJUGATION", question: "Wann ___ der Zug ab? (abfahren)", translation: "Kapan kereta berangkat?", correct: "fahret", wrong: ["fahren", "fährst", "fahrt"] },
             { category: "KONJUGATION", question: "Sie ___ wunderschön Klavier. (spielen)", translation: "Dia (perempuan) bermain piano dengan sangat indah.", correct: "spielt", wrong: ["spielen", "spielst", "spiele"] },
             { category: "KONJUGATION", question: "Du ___ einen Brief. (schreiben)", translation: "Kamu menulis sebuah surat.", correct: "schreibst", wrong: ["schreibt", "schreiben", "schreibe"] },
             { category: "KONJUGATION", question: "Das Auto ___ viel Geld. (kosten)", translation: "Mobil itu harganya mahal.", correct: "kostet", wrong: ["kosten", "kostest", "koste"] },
@@ -258,7 +271,7 @@
             { category: "AKKUSATIV", question: "Für ___ ist das Geschenk? (wer)", translation: "Untuk siapa hadiah itu?", correct: "wen", wrong: ["wer", "wem", "was"] },
             { category: "AKKUSATIV", question: "Wir besuchen ___ Großeltern (Pl.).", translation: "Kami mengunjungi kakek-nenek.", correct: "die", wrong: ["den", "dem", "der"] },
             { category: "AKKUSATIV", question: "Ich sehe ___ Mann. (der Mann)", translation: "Saya melihat pria itu.", correct: "den", wrong: ["dem", "der", "das"] },
-            { category: "AKKUSATIV", question: "Ohne ___ Vater fahre ich nicht. (mein)", translation: "Tanpa ayahku saya tidak akan pergi.", correct: "meinen", wrong: ["mein", "meine", "meinem"] },
+            { category: "AKKUSATIV", question: "Ohne ___ Vater fahre ich tidak. (mein)", translation: "Tanpa ayahku saya tidak akan pergi.", correct: "meinen", wrong: ["mein", "meine", "meinem"] },
             { category: "AKKUSATIV", question: "Er trinkt ___ Orangensaft. (der Saft)", translation: "Dia minum jus jeruk.", correct: "einen", wrong: ["ein", "eine", "einem"] },
             { category: "AKKUSATIV", question: "Sie sucht ___ Wohnungsschlüssel (der Schlüssel).", translation: "Dia mencari kunci apartemen.", correct: "den", wrong: ["dem", "der", "das"] },
             { category: "AKKUSATIV", question: "Kennst du ___ nette Frau dort?", translation: "Apakah kamu kenal wanita baik di sana?", correct: "die", wrong: ["den", "dem", "der"] },
@@ -292,7 +305,7 @@
             { category: "IMPERATIV", question: "Kinder, ___ eure Hausaufgaben! (ihr form - machen)", translation: "Anak-anak, kerjakan PR kalian!", correct: "macht", wrong: ["machen", "machst", "mache"] },
             { category: "IMPERATIV", question: "___ Sie bitte Platz! (Sie form - nehmen)", translation: "Silakan duduk!", correct: "Nehmen", wrong: ["Nehmt", "Nimm", "Nimmst"] },
             { category: "IMPERATIV", question: "___ doch mal zu! (du form - hören)", translation: "Dengarkanlah baik-baik!", correct: "Hör", wrong: ["Höre", "Hört", "Hören"] },
-            { category: "IMPERATIV", question: "___ nicht so faul! (du form - sein)", translation: "Jangan malas!", correct: "Sei", wrong: ["Seid", "Seien", "Bist"] },
+            { category: "IMPERATIV", question: "___ tidak so faul! (du form - sein)", translation: "Jangan malas!", correct: "Sei", wrong: ["Seid", "Seien", "Bist"] },
             { category: "IMPERATIV", question: "___ mir das Salz, bitte! (du form - geben)", translation: "Tolong berikan garam itu!", correct: "Gib", wrong: ["Geben", "Gebt", "Gibe"] },
             { category: "IMPERATIV", question: "___ keine Angst! (du form - haben)", translation: "Jangan takut!", correct: "Hab", wrong: ["Habe", "Habt", "Haben"] },
             { category: "IMPERATIV", question: "Kinder, ___ nicht so laut! (ihr form - sprechen)", translation: "Anak-anak, jangan berbicara begitu keras!", correct: "sprecht", wrong: ["sprechen", "sprichst", "sprich"] },
@@ -440,7 +453,9 @@
             height: 56,
             speed: 9,
             isMovingLeft: false,
-            isMovingRight: false
+            isMovingRight: false,
+            isMovingUp: false,
+            isMovingDown: false
         };
 
         let lasers = [];
@@ -464,7 +479,7 @@
         }
 
         // Kontrol Sentuhan Mobile
-        let touchActive = { left: false, right: false };
+        let touchActive = { left: false, right: false, up: false, down: false };
 
         // --- SISTEM KONTROL INPUT ---
         const keys = {};
@@ -478,15 +493,21 @@
             keys[e.code] = false;
         });
 
-        // Event Listener Touch Mobile
+        // Event Listener Touch Mobile (D-Pad Baru)
         const btnLeft = document.getElementById("btn-left");
         const btnRight = document.getElementById("btn-right");
+        const btnUp = document.getElementById("btn-up");
+        const btnDown = document.getElementById("btn-down");
         const btnFire = document.getElementById("btn-fire");
 
         btnLeft.addEventListener("touchstart", (e) => { e.preventDefault(); touchActive.left = true; });
         btnLeft.addEventListener("touchend", () => touchActive.left = false);
         btnRight.addEventListener("touchstart", (e) => { e.preventDefault(); touchActive.right = true; });
         btnRight.addEventListener("touchend", () => touchActive.right = false);
+        btnUp.addEventListener("touchstart", (e) => { e.preventDefault(); touchActive.up = true; });
+        btnUp.addEventListener("touchend", () => touchActive.up = false);
+        btnDown.addEventListener("touchstart", (e) => { e.preventDefault(); touchActive.down = true; });
+        btnDown.addEventListener("touchend", () => touchActive.down = false);
         btnFire.addEventListener("touchstart", (e) => {
             e.preventDefault();
             if (gameActive) fireLaser();
@@ -678,16 +699,29 @@
                 }
             });
 
-            // 2. Gerakkan Pesawat Pemain
+            // 2. Gerakkan Pesawat Pemain (Mendukung Naik-Turun & Kiri-Kanan)
             if (keys["ArrowLeft"] || keys["KeyA"] || touchActive.left) {
                 player.x -= player.speed;
             }
             if (keys["ArrowRight"] || keys["KeyD"] || touchActive.right) {
                 player.x += player.speed;
             }
+            if (keys["ArrowUp"] || keys["KeyW"] || touchActive.up) {
+                player.y -= player.speed;
+            }
+            if (keys["ArrowDown"] || keys["KeyS"] || touchActive.down) {
+                player.y += player.speed;
+            }
 
+            // Batasi wilayah gerak pesawat agar tetap di area aman layar
             if (player.x < 10) player.x = 10;
             if (player.x > canvas.width - player.width - 10) player.x = canvas.width - player.width - 10;
+            
+            // Batasi agar tidak terbang terlalu tinggi menabrak UI Soal, dan tidak meluncur keluar layar bawah
+            const maxUpperBoundary = canvas.height * 0.45;
+            const maxLowerBoundary = canvas.height - player.height - 20;
+            if (player.y < maxUpperBoundary) player.y = maxUpperBoundary;
+            if (player.y > maxLowerBoundary) player.y = maxLowerBoundary;
 
             // 3. Update Laser Bergerak Ke Atas
             for (let i = lasers.length - 1; i >= 0; i--) {
@@ -708,86 +742,59 @@
                 }
             }
 
-            // 5. Update Asteroid Liar (Tantangan Ekstra Tembakan)
-            for (let i = asteroids.length - 1; i >= 0; i--) {
-                const ast = asteroids[i];
-                ast.y += ast.speed;
-                ast.rotation += ast.rotSpeed;
+            // 5. Update UFO Gerak ke Bawah
+            enemies.forEach(enemy => {
+                enemy.y += enemy.speed;
+                enemy.pulse += 0.04;
+            });
 
-                // Tabrakan Asteroid dengan Pesawat Pemain
-                const distPlayer = Math.hypot((ast.x - (player.x + player.width/2)), (ast.y - (player.y + player.height/2)));
-                if (distPlayer < ast.radius + 20) {
-                    createExplosion(ast.x, ast.y, '#9ca3af', 15);
-                    
-                    // Kerusakan Kapal: Kurangi 1 nyawa, kurangi 20 poin
-                    lives--;
-                    score = Math.max(0, score - 20);
-                    document.getElementById("score-text").innerText = score;
-                    updateLivesUI();
-                    
-                    asteroids.splice(i, 1);
-                    playSound('wrong');
-                    continue;
-                }
-
-                // Deteksi Tembakan Laser ke Asteroid
-                for (let j = lasers.length - 1; j >= 0; j--) {
-                    const l = lasers[j];
-                    const distLaser = Math.hypot(ast.x - l.x, ast.y - l.y);
-                    if (distLaser < ast.radius + 5) {
-                        lasers.splice(j, 1);
-                        ast.hp--;
-                        createExplosion(l.x, l.y, '#6b7280', 6);
-                        
-                        if (ast.hp <= 0) {
-                            createExplosion(ast.x, ast.y, '#4b5563', 18);
-                            score += 30; // Hadiah menghancurkan asteroid
-                            document.getElementById("score-text").innerText = score;
-                            asteroids.splice(i, 1);
-                        }
-                        break;
-                    }
-                }
-
-                if (ast.y > canvas.height + 50) {
-                    asteroids.splice(i, 1);
-                }
-            }
-
-            // 6. Update UFO Jawaban
+            // 6. DETEKSI TABRAKAN & EVALUASI
             let solvedFrame = false;
             let refreshNeeded = false;
 
-            // PRIORITAS DETEKSI: Cek apakah ada laser yang mengenai JAWABAN BENAR terlebih dahulu
-            let correctEnemyHit = null;
-            let correctLaserIndex = -1;
-            let correctEnemyIndex = -1;
+            // A. PRIORITAS UTAMA: Periksa apakah JAWABAN BENAR tertembak laser atau disentuh player
+            let correctEnemy = null;
+            let correctEnemyIdx = -1;
+            let correctHitByLaserIdx = -1;
 
             for (let i = 0; i < enemies.length; i++) {
                 const enemy = enemies[i];
-                if (!enemy.isCorrect) continue;
-
-                for (let j = 0; j < lasers.length; j++) {
-                    const laser = lasers[j];
+                if (enemy.isCorrect) {
+                    // Cek Laser
+                    for (let j = 0; j < lasers.length; j++) {
+                        const laser = lasers[j];
+                        if (
+                            laser.x < enemy.x + enemy.width &&
+                            laser.x + laser.width > enemy.x &&
+                            laser.y < enemy.y + enemy.height &&
+                            laser.y + laser.height > enemy.y
+                        ) {
+                            correctEnemy = enemy;
+                            correctEnemyIdx = i;
+                            correctHitByLaserIdx = j;
+                            break;
+                        }
+                    }
+                    // Cek Tabrakan Fisik dengan Player
                     if (
-                        laser.x < enemy.x + enemy.width &&
-                        laser.x + laser.width > enemy.x &&
-                        laser.y < enemy.y + enemy.height &&
-                        laser.y + laser.height > enemy.y
+                        player.x < enemy.x + enemy.width &&
+                        player.x + player.width > enemy.x &&
+                        player.y < enemy.y + enemy.height &&
+                        player.y + player.height > enemy.y
                     ) {
-                        correctEnemyHit = enemy;
-                        correctLaserIndex = j;
-                        correctEnemyIndex = i;
-                        break;
+                        correctEnemy = enemy;
+                        correctEnemyIdx = i;
                     }
                 }
-                if (correctEnemyHit) break;
             }
 
-            // Jika jawaban benar tertembak, proses langsung dan buat frame aman (solvedFrame = true)
-            if (correctEnemyHit) {
-                lasers.splice(correctLaserIndex, 1);
-                createExplosion(correctEnemyHit.x + correctEnemyHit.width/2, correctEnemyHit.y + correctEnemyHit.height/2, '#4ade80', 35);
+            // Jika jawaban benar terkena, proses kemenangan instan dan abaikan seluruh sisa piringan
+            if (correctEnemy) {
+                if (correctHitByLaserIdx !== -1) {
+                    lasers.splice(correctHitByLaserIdx, 1);
+                }
+                createExplosion(correctEnemy.x + correctEnemy.width / 2, correctEnemy.y + correctEnemy.height / 2, '#4ade80', 35);
+                
                 score += 100; // Plus Poin
                 correctAnswersCount++;
                 document.getElementById("score-text").innerText = score;
@@ -795,46 +802,84 @@
                 timeLeft = Math.min(99, timeLeft + 6);
                 document.getElementById("timer-text").innerText = timeLeft + "s";
 
-                showFeedback(true, correctEnemyHit.text);
-                solvedFrame = true;
+                showFeedback(true, correctEnemy.text);
                 
-                // Hapus musuh yang benar
-                enemies.splice(correctEnemyIndex, 1);
+                // Hapus piringan dan laser seketika untuk mencegah double penalti pada detik yang sama
+                enemies = [];
+                lasers = [];
+                solvedFrame = true;
             }
 
-            // Loop untuk sisa musuh dan piringan salah
-            for (let i = enemies.length - 1; i >= 0; i--) {
-                const enemy = enemies[i];
-                enemy.y += enemy.speed;
-                enemy.pulse += 0.04;
+            // B. JIKA SOAL BELUM DISELESAIKAN: Periksa asteroid dan jawaban salah
+            if (!solvedFrame) {
+                // 1. Update & Cek Asteroid Liar
+                for (let i = asteroids.length - 1; i >= 0; i--) {
+                    const ast = asteroids[i];
+                    ast.y += ast.speed;
+                    ast.rotation += ast.rotSpeed;
 
-                // Cek Tabrakan Fisik UFO Musuh dengan Pesawat Pemain
-                if (
-                    player.x < enemy.x + enemy.width &&
-                    player.x + player.width > enemy.x &&
-                    player.y < enemy.y + enemy.height &&
-                    player.y + player.height > enemy.y
-                ) {
-                    createExplosion(enemy.x + enemy.width/2, enemy.y + enemy.height/2, '#f87171', 25);
-                    enemies.splice(i, 1);
-                    
-                    // JANGAN kurangi nyawa / poin jika soal sudah berhasil diselesaikan dalam frame ini
-                    if (!solvedFrame) {
+                    // Tabrakan Asteroid dengan Pesawat Pemain
+                    const distPlayer = Math.hypot((ast.x - (player.x + player.width/2)), (ast.y - (player.y + player.height/2)));
+                    if (distPlayer < ast.radius + 20) {
+                        createExplosion(ast.x, ast.y, '#9ca3af', 15);
+                        
+                        lives--;
+                        score = Math.max(0, score - 20);
+                        document.getElementById("score-text").innerText = score;
+                        updateLivesUI();
+                        
+                        asteroids.splice(i, 1);
+                        playSound('wrong');
+                        continue;
+                    }
+
+                    // Tembakan Laser ke Asteroid
+                    for (let j = lasers.length - 1; j >= 0; j--) {
+                        const l = lasers[j];
+                        const distLaser = Math.hypot(ast.x - l.x, ast.y - l.y);
+                        if (distLaser < ast.radius + 5) {
+                            lasers.splice(j, 1);
+                            ast.hp--;
+                            createExplosion(l.x, l.y, '#6b7280', 6);
+                            
+                            if (ast.hp <= 0) {
+                                createExplosion(ast.x, ast.y, '#4b5563', 18);
+                                score += 30;
+                                document.getElementById("score-text").innerText = score;
+                                asteroids.splice(i, 1);
+                            }
+                            break;
+                        }
+                    }
+
+                    if (ast.y > canvas.height + 50) {
+                        asteroids.splice(i, 1);
+                    }
+                }
+
+                // 2. Cek UFO Jawaban Salah
+                for (let i = enemies.length - 1; i >= 0; i--) {
+                    const enemy = enemies[i];
+
+                    // Cek tabrakan fisik player dengan jawaban salah
+                    if (
+                        player.x < enemy.x + enemy.width &&
+                        player.x + player.width > enemy.x &&
+                        player.y < enemy.y + enemy.height &&
+                        player.y + player.height > enemy.y
+                    ) {
+                        createExplosion(enemy.x + enemy.width/2, enemy.y + enemy.height/2, '#ef4444', 25);
+                        enemies.splice(i, 1);
+                        
                         lives--;
                         score = Math.max(0, score - 50);
                         document.getElementById("score-text").innerText = score;
                         updateLivesUI();
                         playSound('wrong');
-
-                        if (enemy.isCorrect) {
-                            refreshNeeded = true;
-                        }
+                        continue;
                     }
-                    continue;
-                }
 
-                // Cek Deteksi Laser Terhadap Jawaban (Hanya diproses jika soal BELUM diselesaikan di frame ini)
-                if (!solvedFrame) {
+                    // Cek tembakan laser ke jawaban salah
                     for (let j = lasers.length - 1; j >= 0; j--) {
                         const laser = lasers[j];
                         if (
@@ -844,9 +889,6 @@
                             laser.y + laser.height > enemy.y
                         ) {
                             lasers.splice(j, 1);
-
-                            // Karena tabrakan dengan jawaban benar sudah diselesaikan di atas,
-                            // semua tabrakan di loop ini pasti merupakan JAWABAN SALAH.
                             createExplosion(enemy.x + enemy.width/2, enemy.y + enemy.height/2, '#ef4444', 25);
                             
                             lives--;
@@ -859,23 +901,34 @@
                             break;
                         }
                     }
-                }
 
-                // Jika UFO Jawaban lolos tanpa ditembak
-                if (!solvedFrame && enemy.y > canvas.height) {
-                    if (enemy.isCorrect) {
-                        // Jika jawaban benar dibiarkan lolos, kurangi nyawa & poin
-                        lives--;
-                        score = Math.max(0, score - 50);
-                        document.getElementById("score-text").innerText = score;
-                        updateLivesUI();
-                        refreshNeeded = true;
+                    // Jika jawaban salah lolos ke bawah layar
+                    if (enemy.y > canvas.height) {
+                        enemies.splice(i, 1);
                     }
+                }
+            }
+
+            // C. Cek apakah Jawaban Benar lolos tanpa disentuh/ditembak
+            let correctSlipped = false;
+            for (let i = enemies.length - 1; i >= 0; i--) {
+                const enemy = enemies[i];
+                if (enemy.isCorrect && enemy.y > canvas.height) {
+                    correctSlipped = true;
                     enemies.splice(i, 1);
                 }
             }
 
-            // Ganti soal baru jika sudah terjawab
+            if (correctSlipped && !solvedFrame) {
+                lives--;
+                score = Math.max(0, score - 50);
+                document.getElementById("score-text").innerText = score;
+                updateLivesUI();
+                playSound('wrong');
+                refreshNeeded = true;
+            }
+
+            // Ganti ke pertanyaan baru
             if (solvedFrame || refreshNeeded || enemies.length === 0) {
                 totalQuestionsAnswered++;
                 
