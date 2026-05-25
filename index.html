@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -163,7 +163,7 @@
                         </div>
                     </div>
                     
-                    <!-- 5 NYAWA (SISTEM NYAWA SEKARANG) -->
+                    <!-- 5 NYAWA -->
                     <div class="bg-black/75 backdrop-blur border border-red-500/40 px-3 py-1.5 md:px-4 md:py-2 rounded-xl flex flex-col shadow-md w-32 md:w-44">
                         <span class="text-[9px] md:text-[10px] text-red-400 font-bold uppercase tracking-wider mb-1 flex justify-between">
                             <span>NYAWA</span>
@@ -277,7 +277,7 @@
             { category: "AKKUSATIV", question: "Ich schreibe ___ kurzen Text. (der)", translation: "Saya menulis teks pendek.", correct: "einen", wrong: ["ein", "eine", "einem"] },
 
             // ================== KATEGORI: IMPERATIV (25 SOAL) ==================
-            { category: "IMPERATIV", question: "___ nicht so schnell! (du form - fahren)", translation: "Jangan berkendara begitu cepat!", correct: "Fahr", wrong: ["Fahre", "Fährst", "Fahrt"] },
+            { category: "IMPERATIV", question: "___ tidak so schnell! (du form - fahren)", translation: "Jangan berkendara begitu cepat!", correct: "Fahr", wrong: ["Fahre", "Fährst", "Fahrt"] },
             { category: "IMPERATIV", question: "___ leise, Kinder! (ihr form - sein)", translation: "Harap tenang, anak-anak!", correct: "Seid", wrong: ["Seien", "Bist", "Sind"] },
             { category: "IMPERATIV", question: "___ Sie bitte hier! (Sie form - unterschreiben)", translation: "Silakan tanda tangan di sini!", correct: "Unterschreiben", wrong: ["Unterschreibt", "Unterschreib", "Unterschreibe"] },
             { category: "IMPERATIV", question: "___ mir bitte! (du form - helfen)", translation: "Tolong bantu saya!", correct: "Hilf", wrong: ["Helf", "Helfen", "Helft"] },
@@ -328,7 +328,7 @@
             { category: "DATIV", question: "Er hilft ___ alten Opa beim Tragen. (der)", translation: "Dia membantu kakek tua membawakan barang.", correct: "dem", wrong: ["den", "der", "das"] },
             { category: "DATIV", question: "Ich vertraue ___ besten Freundin. (die)", translation: "Saya memercayai sahabat perempuan terbaik saya.", correct: "der", wrong: ["die", "dem", "den"] },
             { category: "DATIV", question: "Aus ___ Haus kommt laute Musik. (das)", translation: "Dari dalam rumah itu keluar musik keras.", correct: "dem", wrong: ["den", "der", "das"] },
-            { category: "DATIV", question: "Das rote Kleid passt ___ Schwester nicht. (die)", translation: "Gaun merah itu tidak pas untuk kakak perempuan.", correct: "der", wrong: ["die", "den", "dem"] }
+            { category: "DATIV", question: "Das rote Kleid passt ___ Schwester tidak. (die)", translation: "Gaun merah itu tidak pas untuk kakak perempuan.", correct: "der", wrong: ["die", "den", "dem"] }
         ];
 
         // --- MANAJER AUDIO RETRO (WEB AUDIO API) ---
@@ -420,7 +420,7 @@
         // --- VARIABLE STATE GAME ---
         let score = 0;
         let level = 1;
-        let lives = 5; // Nyawa sekarang diset menjadi 5
+        let lives = 5; 
         let timeLeft = 60;
         let totalQuestionsAnswered = 0;
         let correctAnswersCount = 0;
@@ -758,6 +758,51 @@
             let solvedFrame = false;
             let refreshNeeded = false;
 
+            // PRIORITAS DETEKSI: Cek apakah ada laser yang mengenai JAWABAN BENAR terlebih dahulu
+            let correctEnemyHit = null;
+            let correctLaserIndex = -1;
+            let correctEnemyIndex = -1;
+
+            for (let i = 0; i < enemies.length; i++) {
+                const enemy = enemies[i];
+                if (!enemy.isCorrect) continue;
+
+                for (let j = 0; j < lasers.length; j++) {
+                    const laser = lasers[j];
+                    if (
+                        laser.x < enemy.x + enemy.width &&
+                        laser.x + laser.width > enemy.x &&
+                        laser.y < enemy.y + enemy.height &&
+                        laser.y + laser.height > enemy.y
+                    ) {
+                        correctEnemyHit = enemy;
+                        correctLaserIndex = j;
+                        correctEnemyIndex = i;
+                        break;
+                    }
+                }
+                if (correctEnemyHit) break;
+            }
+
+            // Jika jawaban benar tertembak, proses langsung dan buat frame aman (solvedFrame = true)
+            if (correctEnemyHit) {
+                lasers.splice(correctLaserIndex, 1);
+                createExplosion(correctEnemyHit.x + correctEnemyHit.width/2, correctEnemyHit.y + correctEnemyHit.height/2, '#4ade80', 35);
+                score += 100; // Plus Poin
+                correctAnswersCount++;
+                document.getElementById("score-text").innerText = score;
+                
+                timeLeft = Math.min(99, timeLeft + 6);
+                document.getElementById("timer-text").innerText = timeLeft + "s";
+
+                showFeedback(true, correctEnemyHit.text);
+                solvedFrame = true;
+                
+                // Hapus musuh yang benar
+                enemies.splice(correctEnemyIndex, 1);
+            }
+
+            // Loop untuk sisa musuh dan piringan salah
             for (let i = enemies.length - 1; i >= 0; i--) {
                 const enemy = enemies[i];
                 enemy.y += enemy.speed;
@@ -773,57 +818,46 @@
                     createExplosion(enemy.x + enemy.width/2, enemy.y + enemy.height/2, '#f87171', 25);
                     enemies.splice(i, 1);
                     
-                    // Pengurangan Skor & Nyawa saat bertabrakan fisik dengan musuh
-                    lives--;
-                    score = Math.max(0, score - 50);
-                    document.getElementById("score-text").innerText = score;
-                    updateLivesUI();
-                    playSound('wrong');
+                    // JANGAN kurangi nyawa / poin jika soal sudah berhasil diselesaikan dalam frame ini
+                    if (!solvedFrame) {
+                        lives--;
+                        score = Math.max(0, score - 50);
+                        document.getElementById("score-text").innerText = score;
+                        updateLivesUI();
+                        playSound('wrong');
 
-                    if (enemy.isCorrect) {
-                        refreshNeeded = true;
+                        if (enemy.isCorrect) {
+                            refreshNeeded = true;
+                        }
                     }
                     continue;
                 }
 
-                // Cek Deteksi Laser Terhadap Jawaban
-                for (let j = lasers.length - 1; j >= 0; j--) {
-                    const laser = lasers[j];
-                    if (
-                        laser.x < enemy.x + enemy.width &&
-                        laser.x + laser.width > enemy.x &&
-                        laser.y < enemy.y + enemy.height &&
-                        laser.y + laser.height > enemy.y
-                    ) {
-                        lasers.splice(j, 1);
+                // Cek Deteksi Laser Terhadap Jawaban (Hanya diproses jika soal BELUM diselesaikan di frame ini)
+                if (!solvedFrame) {
+                    for (let j = lasers.length - 1; j >= 0; j--) {
+                        const laser = lasers[j];
+                        if (
+                            laser.x < enemy.x + enemy.width &&
+                            laser.x + laser.width > enemy.x &&
+                            laser.y < enemy.y + enemy.height &&
+                            laser.y + laser.height > enemy.y
+                        ) {
+                            lasers.splice(j, 1);
 
-                        if (enemy.isCorrect) {
-                            // Jawaban BENAR Berhasil Ditembak!
-                            createExplosion(enemy.x + enemy.width/2, enemy.y + enemy.height/2, '#4ade80', 35);
-                            score += 100; // Plus poin
-                            correctAnswersCount++;
-                            document.getElementById("score-text").innerText = score;
-                            
-                            timeLeft = Math.min(99, timeLeft + 6);
-                            document.getElementById("timer-text").innerText = timeLeft + "s";
-
-                            showFeedback(true, enemy.text);
-                            solvedFrame = true;
-                        } else {
-                            // Jawaban SALAH Ditembak!
+                            // Karena tabrakan dengan jawaban benar sudah diselesaikan di atas,
+                            // semua tabrakan di loop ini pasti merupakan JAWABAN SALAH.
                             createExplosion(enemy.x + enemy.width/2, enemy.y + enemy.height/2, '#ef4444', 25);
                             
-                            // Pengurangan nyawa & pengurangan skor jika salah menjawab
                             lives--;
-                            score = Math.max(0, score - 50); // Minus poin
+                            score = Math.max(0, score - 50); // Minus Poin
                             document.getElementById("score-text").innerText = score;
                             updateLivesUI();
                             
                             showFeedback(false, enemy.text);
+                            enemies.splice(i, 1);
+                            break;
                         }
-
-                        enemies.splice(i, 1);
-                        break;
                     }
                 }
 
